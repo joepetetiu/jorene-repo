@@ -1,59 +1,77 @@
-# CivicGuard AI — WebMCP Challenge Demo Script
+# ThreatTriage WebMCP — Demo Script
 
-Target length: ~2 minutes 15 seconds.
+Target length: **2:10–2:35**. Keep the final YouTube video under 3 minutes.
 
-## 0:00–0:15 — Problem
+## 0:00–0:18 — Problem and hook
 
-“Security incidents often start with one suspicious message. In schools, nonprofits, and public-service teams, the person receiving it may not have a security specialist beside them. CivicGuard AI gives both humans and browser agents a structured, defensive workflow.”
+**Narration**
 
-## 0:15–0:35 — Show the app
+“Suspicious messages create two problems at once: people need help quickly, but an AI browser agent should not guess its way through a security workflow. ThreatTriage uses WebMCP to expose narrow defensive tools that both the human and the agent can understand.”
 
-Open CivicGuard AI. Point out the WebMCP status card and the privacy-first local dashboard.
+**On screen**
 
-“Everything in this MVP runs in the browser. No suspicious-message content is uploaded by the app.”
+Show the ThreatTriage home page and the green **WebMCP tools registered** status.
 
-## 0:35–1:00 — Tool 1: analyze
+## 0:18–0:35 — Human starts the case
 
-Load the sample suspicious SMS.
+Click **Load safe demo sample**.
 
-Ask a compatible agent:
+**Narration**
 
-> Analyze the suspicious message on this page using CivicGuard’s WebMCP tool. Do not open any link.
+“This sample imitates a payroll phishing SMS. ThreatTriage does not visit the link and sends no message content to a server. The app is static and stores demo cases locally in the browser.”
 
-Show the structured risk result and evidence.
+## 0:35–1:05 — Agent invokes WebMCP
 
-“Instead of guessing which buttons to click, the agent calls `analyze_suspicious_message` directly.”
+Give the browser agent this prompt:
 
-## 1:00–1:20 — Tool 2: create a case
+> Analyze the suspicious message in this page, create a local incident case for it, and build a high-risk phishing response plan. Do not open any links or send anything.
+
+**Narration while the agent acts**
+
+“Instead of searching the DOM and clicking controls, the agent can discover explicit WebMCP tools registered with `document.modelContext.registerTool()`. The analysis is reflected in the same interface the human sees.”
+
+Show:
+- Quick Triage risk result
+- the newly created local case
+- the Response Plan
+- Agent Activity entries
+
+## 1:05–1:30 — Human/agent shared state
+
+**Narration**
+
+“The useful part is not just tool calling. Agent actions update the ordinary human interface, and ThreatTriage keeps a visible activity trail. The human can inspect the case, change its review status, or ask the agent to do that explicitly.”
+
+Ask the agent:
+
+> List the local incident cases and mark the phishing case reviewed.
+
+Show the dashboard status changing to **Reviewed** and the matching Agent Activity entry.
+
+## 1:30–1:52 — Awareness draft
 
 Ask:
 
-> Create an incident case titled “Payroll phishing SMS” with the analysis context and detected risk.
+> Draft a short awareness notice for staff about suspicious payroll login links. Do not send or publish it.
 
-Show the new case appearing in the Local Incident Dashboard.
+**Narration**
 
-“This is a side-effecting action, so the tool description tells the agent to use it only when the user asks to record the incident.”
+“The agent can also prepare a safe awareness draft, but ThreatTriage only displays the text. It never posts or sends it automatically.”
 
-## 1:20–1:40 — Tool 3: response plan
+Show the Awareness Notice section populate.
 
-Ask:
+## 1:52–2:18 — Safety and architecture
 
-> Build a defensive response plan for a phishing incident at this risk level.
+**Narration**
 
-Show the returned containment and verification steps.
+“All six tools are bounded and defensive. Read-only and untrusted-content annotations clarify intent and trust boundaries. State-changing tools affect only local browser data. There is no backend, no API key, and suspicious URLs are never opened.”
 
-“CivicGuard stays defensive-only: preserve evidence, verify independently, protect accounts, and escalate safely.”
+Briefly show `app.js` at the `document.modelContext.registerTool()` implementation.
 
-## 1:40–1:58 — Tool 4: awareness
+## 2:18–2:30 — Close
 
-Ask:
+**Narration**
 
-> Draft a short awareness notice for staff about suspicious login links.
+“ThreatTriage demonstrates a web where humans keep visibility and control while agents get reliable, structured actions. That is the kind of security workflow WebMCP makes possible.”
 
-Show the notice.
-
-“This turns one incident into reusable prevention guidance without exposing private case data.”
-
-## 1:58–2:15 — Close
-
-“CivicGuard AI demonstrates why WebMCP matters for high-stakes workflows: explicit tools, bounded actions, human control, and a UI that remains useful even without an agent. It is open source and designed to grow into a practical defensive assistant for resource-constrained community organizations.”
+End on the full app with the Agent Activity panel visible.
