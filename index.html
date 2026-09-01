@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="CivicGuard AI — privacy-first defensive cyber triage with WebMCP." />
-  <title>CivicGuard AI</title>
+  <meta name="description" content="ThreatTriage WebMCP — privacy-first, human-visible defensive cyber triage for people and browser agents." />
+  <title>ThreatTriage WebMCP</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="hero shell">
     <div>
-      <p class="eyebrow">WEBMCP • DEFENSIVE AI • PRIVACY-FIRST</p>
-      <h1>CivicGuard AI</h1>
-      <p class="lede">Agent-ready incident triage for schools, nonprofits, and public-service teams.</p>
+      <p class="eyebrow">WEBMCP • DEFENSIVE SECURITY • HUMAN-IN-THE-LOOP</p>
+      <h1>ThreatTriage</h1>
+      <p class="lede">Human-visible, agent-ready cyber triage for schools, nonprofits, and public-service teams.</p>
     </div>
     <div class="status-card">
       <span id="webmcpDot" class="dot"></span>
@@ -26,22 +26,14 @@
   <main class="shell grid">
     <section class="panel span-2">
       <div class="panel-head">
-        <div>
-          <p class="kicker">01</p>
-          <h2>Quick Triage</h2>
-        </div>
-        <button id="sampleBtn" class="ghost">Load sample</button>
+        <div><p class="kicker">01</p><h2>Quick Triage</h2></div>
+        <button id="sampleBtn" class="ghost">Load safe demo sample</button>
       </div>
       <label for="messageText">Suspicious message</label>
       <textarea id="messageText" rows="8" placeholder="Paste a suspicious SMS, email, or chat message here…"></textarea>
       <div class="row">
         <label class="grow">Channel
-          <select id="channel">
-            <option value="sms">SMS</option>
-            <option value="email">Email</option>
-            <option value="chat">Chat / Messenger</option>
-            <option value="other">Other</option>
-          </select>
+          <select id="channel"><option value="sms">SMS</option><option value="email">Email</option><option value="chat">Chat / Messenger</option><option value="other">Other</option></select>
         </label>
         <button id="analyzeBtn" class="primary">Analyze locally</button>
       </div>
@@ -49,12 +41,7 @@
     </section>
 
     <section class="panel">
-      <div class="panel-head">
-        <div>
-          <p class="kicker">02</p>
-          <h2>Incident Case</h2>
-        </div>
-      </div>
+      <div class="panel-head"><div><p class="kicker">02</p><h2>Incident Case</h2></div></div>
       <label for="caseTitle">Case title</label>
       <input id="caseTitle" placeholder="e.g. Payroll phishing SMS" />
       <label for="caseContext">Context</label>
@@ -63,70 +50,48 @@
     </section>
 
     <section class="panel">
-      <div class="panel-head">
-        <div>
-          <p class="kicker">03</p>
-          <h2>Response Plan</h2>
-        </div>
-      </div>
+      <div class="panel-head"><div><p class="kicker">03</p><h2>Response Plan</h2></div></div>
       <label for="scenario">Scenario</label>
-      <select id="scenario">
-        <option value="phishing">Phishing / credential theft</option>
-        <option value="account_takeover">Suspected account takeover</option>
-        <option value="malware">Suspicious attachment / malware</option>
-        <option value="data_exposure">Possible data exposure</option>
-        <option value="unknown">Unknown incident</option>
-      </select>
+      <select id="scenario"><option value="phishing">Phishing / credential theft</option><option value="account_takeover">Suspected account takeover</option><option value="malware">Suspicious attachment / malware</option><option value="data_exposure">Possible data exposure</option><option value="unknown">Unknown incident</option></select>
       <label for="riskLevel">Risk</label>
-      <select id="riskLevel">
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-        <option value="critical">Critical</option>
-      </select>
+      <select id="riskLevel"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="critical">Critical</option></select>
       <button id="planBtn" class="primary full">Build defensive plan</button>
       <ol id="planResult" class="steps muted"><li>No plan yet.</li></ol>
     </section>
 
     <section class="panel span-2">
       <div class="panel-head">
-        <div>
-          <p class="kicker">04</p>
-          <h2>Local Incident Dashboard</h2>
-        </div>
+        <div><p class="kicker">04</p><h2>Local Incident Dashboard</h2></div>
         <button id="clearBtn" class="ghost danger">Clear demo data</button>
       </div>
       <div id="caseList" class="case-list"></div>
     </section>
 
     <section class="panel span-2">
-      <div class="panel-head">
-        <div>
-          <p class="kicker">05</p>
-          <h2>Awareness Notice</h2>
-        </div>
-      </div>
+      <div class="panel-head"><div><p class="kicker">05</p><h2>Awareness Notice</h2></div></div>
       <div class="row">
         <label class="grow">Audience
-          <select id="audience">
-            <option value="staff">Staff</option>
-            <option value="students">Students</option>
-            <option value="volunteers">Volunteers</option>
-            <option value="public">General public</option>
-          </select>
+          <select id="audience"><option value="staff">Staff</option><option value="students">Students</option><option value="volunteers">Volunteers</option><option value="public">General public</option></select>
         </label>
-        <label class="grow">Topic
-          <input id="noticeTopic" value="suspicious login links" />
-        </label>
+        <label class="grow">Topic<input id="noticeTopic" value="suspicious login links" /></label>
       </div>
       <button id="noticeBtn" class="primary">Draft notice</button>
       <div id="noticeResult" class="result muted">No notice yet.</div>
     </section>
+
+    <section class="panel span-2">
+      <div class="panel-head">
+        <div><p class="kicker">06</p><h2>Agent Activity</h2></div>
+        <span class="badge">Human-visible WebMCP actions</span>
+      </div>
+      <p class="muted activity-help">When a compatible browser agent invokes a ThreatTriage tool, the action appears here and relevant results are also reflected in the normal human interface.</p>
+      <div id="agentActivityList" class="activity-list"><div class="result muted">No agent actions yet.</div></div>
+    </section>
   </main>
 
   <footer class="shell footer">
-    <p><strong>CivicGuard AI</strong> is a defensive-only demonstration. Analysis is heuristic and educational; it does not replace a professional incident investigation.</p>
-    <p>All demo data remains in this browser.</p>
+    <p><strong>ThreatTriage WebMCP</strong> is a defensive-only demonstration. Its heuristic triage is educational and does not replace a professional security investigation.</p>
+    <p>All demo message and case data stays in this browser via localStorage.</p>
   </footer>
 
   <script src="app.js"></script>
