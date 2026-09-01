@@ -1,31 +1,53 @@
-# CivicGuard AI
+# ThreatTriage WebMCP
 
-**Agent-ready defensive cyber triage for schools, nonprofits, and public-service teams.**
+**Human-visible, agent-ready defensive cyber triage for schools, nonprofits, and public-service teams.**
 
-CivicGuard AI is a privacy-first browser app that helps people and AI agents work together to assess suspicious messages, organize incident details, generate safe response plans, and prepare awareness guidance. It uses the emerging **WebMCP** standard so browser agents can call structured tools instead of guessing how to operate the interface.
+ThreatTriage is a privacy-first browser app that lets people and AI browser agents collaborate on suspicious-message triage, incident organization, defensive response planning, and awareness guidance. It uses the emerging **WebMCP** standard so agents can invoke explicit, bounded browser tools instead of guessing how to operate the page.
 
 > Built for the OpenAI WebMCP Challenge 2026.
 
-## Why WebMCP matters here
+## Live demo
 
-Security incidents are stressful and time-sensitive. Traditional agents must inspect page text and simulate clicks. CivicGuard exposes explicit, bounded tools through `document.modelContext.registerTool()` so an agent can reliably help with defensive workflows while the user remains in control.
+https://joepetetiu.github.io/jorene-repo/
+
+## Why this is a strong fit for WebMCP
+
+Security incidents are stressful and time-sensitive. A conventional browser agent must infer intent from page text, locate controls, and simulate clicks. ThreatTriage exposes purpose-built defensive actions through `document.modelContext.registerTool()`. The same actions update the normal human interface, so the user can see what the agent did and remain in the loop.
+
+This makes the collaboration explicit:
+
+1. A human provides a suspicious message or describes an incident.
+2. An agent invokes a narrow WebMCP tool rather than navigating the UI by guesswork.
+3. ThreatTriage performs the action locally and reflects the result in the visible dashboard.
+4. The Agent Activity panel records the browser-agent action for human awareness.
+5. State-changing actions are limited to local browser data; the app never sends messages, clicks suspicious links, changes accounts, or posts notices.
 
 ## WebMCP tools
 
-CivicGuard registers these tools when WebMCP is available:
+ThreatTriage registers six tools:
 
-- `analyze_suspicious_message` — locally evaluates suspicious-message indicators and returns a risk tier plus evidence.
+- `analyze_suspicious_message` — locally evaluates suspicious-message indicators and displays risk, evidence, and safe guidance.
 - `create_incident_case` — creates a local incident case in the visible dashboard.
-- `build_response_plan` — generates defensive next steps based on scenario and risk.
-- `draft_awareness_notice` — prepares a concise, non-alarmist safety notice for a chosen audience.
-- `list_incident_cases` — returns cases currently stored in the browser.
-- `mark_case_reviewed` — marks a case reviewed and updates the visible UI.
+- `build_response_plan` — generates defensive next steps for common incident scenarios and displays them in the page.
+- `draft_awareness_notice` — prepares a concise safety notice and displays the draft without sending it.
+- `list_incident_cases` — lets the agent and human review the same local case list.
+- `mark_case_reviewed` — changes a case's local review status and updates the visible dashboard.
 
-All demo data stays in the browser via `localStorage`. No message content is uploaded by this static MVP.
+The implementation awaits each `registerTool()` call and uses WebMCP annotations including `readOnlyHint` and `untrustedContentHint` to make tool intent and trust boundaries clearer.
+
+## Privacy and safety model
+
+- No backend.
+- No API key.
+- Message and case data remain in browser `localStorage`.
+- The triage engine never visits URLs found in suspicious messages.
+- The project is defensive-only and does not provide malware, exploitation, persistence, credential-harvesting, or unauthorized-access functionality.
+- User-provided incident text is treated as untrusted content in relevant WebMCP tools.
+- Risk scoring is a simple educational heuristic, not a professional security verdict.
 
 ## Run locally
 
-Because this is a static app, you can serve the repository with any local HTTP server, for example:
+This is a dependency-free static app. From the repository root:
 
 ```bash
 python -m http.server 8000
@@ -35,42 +57,44 @@ Then open `http://localhost:8000`.
 
 ## Test WebMCP
 
-The 2026 WebMCP draft exposes the producer API on `document.modelContext`. In a compatible Chromium build, enable the WebMCP testing/experimental feature if required, reload CivicGuard, and check the status badge in the app.
+Use either:
 
-From DevTools, a supporting browser can inspect tools with:
+- ChatGPT's in-app browser, which supports WebMCP for the challenge; or
+- Google Chrome 149+ with `chrome://flags/#enable-webmcp-testing` enabled, followed by a browser restart.
 
-```js
-await document.modelContext.getTools()
-```
+When WebMCP is available, the status card at the top changes to **WebMCP tools registered**.
 
-## GitHub Pages
+Suggested test prompt for a browser agent:
 
-This repository is intentionally dependency-free and can be deployed directly from the repository root using GitHub Pages.
+> Analyze the suspicious message in this page, create a local incident case for it, and build a high-risk phishing response plan. Do not open any links or send anything.
+
+Then confirm that the results appear in Quick Triage, the Local Incident Dashboard, Response Plan, and Agent Activity.
 
 ## Demo flow
 
-1. Paste a suspicious SMS/email into **Quick Triage** or load the sample.
-2. Ask an agent to use `analyze_suspicious_message`.
-3. Ask it to create a case with `create_incident_case`.
-4. Ask for a defensive response plan using `build_response_plan`.
-5. The human reviews the dashboard and marks the case reviewed, or the agent uses `mark_case_reviewed` when asked.
-6. Ask for an awareness notice tailored to staff, students, volunteers, or the public.
+1. Open the live site in a WebMCP-capable browser.
+2. Click **Load safe demo sample**.
+3. Ask the agent to analyze the sample with `analyze_suspicious_message`.
+4. Ask it to create a case using `create_incident_case`.
+5. Ask it to build a defensive plan with `build_response_plan`.
+6. Ask it to draft a staff awareness notice with `draft_awareness_notice`.
+7. Show the visible Agent Activity log and local dashboard.
 
-A short submission script is available in [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md).
+A <3-minute recording script is in [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md).
 
-## Safety boundaries
+## Hackathon provenance
 
-CivicGuard is defensive-only. It does not generate phishing kits, credential-harvesting pages, malware, exploit chains, persistence techniques, or instructions for unauthorized access. Risk scoring is heuristic and educational, not a substitute for a professional security investigation.
+The GitHub repository container existed before the hackathon but contained no application code. **ThreatTriage itself was created from scratch during the WebMCP Challenge submission period on September 1, 2026.** The dated commit history shows the addition of the entire application, WebMCP implementation, documentation, and challenge-specific improvements during the eligible period.
 
 ## Tech
 
 - HTML5
 - CSS
 - Vanilla JavaScript
-- WebMCP imperative API (`document.modelContext.registerTool`)
+- WebMCP imperative API: `document.modelContext.registerTool()`
 - Browser `localStorage`
-- No backend and no API keys required
+- GitHub Pages
 
 ## License
 
-MIT
+MIT — see [`LICENSE`](LICENSE).
